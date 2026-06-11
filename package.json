@@ -1,0 +1,12 @@
+{
+  "name": "spms",
+  "version": "1.0.0",
+  "description": "ASP.NET Core 8.0 Project",
+  "main": "index.js",
+  "scripts": {
+    "start": "echo 'ERROR: This service is misconfigured as a Node.js app. Please change the Runtime to Docker in Render Settings to run the .NET application.' && exit 1",
+    "build": "echo 'Building...'"
+  },
+  "author": "",
+  "license": "ISC"
+}
