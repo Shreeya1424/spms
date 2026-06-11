@@ -4,8 +4,8 @@
   "description": "ASP.NET Core 8.0 Project",
   "main": "index.js",
   "scripts": {
-    "start": "sh start.sh",
-    "build": "echo 'Building...'"
+    "start": "bash start.sh",
+    "build": "chmod +x start.sh || true"
   },
   "author": "",
   "license": "ISC"
