@@ -1,0 +1,207 @@
+@model List<spms.Models.ProjectModel>
+@{
+    ViewData["Title"] = "Manage Projects";
+    var userRole = ViewData["UserRole"]?.ToString() ?? "";
+    var isStudent = userRole == "Student";
+}
+
+<div class="pagetitle">
+    <h1>Manage Projects</h1>
+    <nav><ol class="breadcrumb"><li class="breadcrumb-item"><a href="/">Home</a></li><li class="breadcrumb-item active">Projects</li></ol></nav>
+</div>
+
+<section class="section">
+    <div class="card">
+        <div class="card-body">
+            <div class="top-action-bar mt-3">
+                <div class="d-flex align-items-center gap-2 flex-grow-1">
+                    <div class="search-box">
+                        <i class="bi bi-search search-icon"></i>
+                        <input type="text" id="tableSearchInput" class="form-control" placeholder="Search projects...">
+                    </div>
+                    @* <button class="filter-toggle-btn" type="button" data-bs-toggle="collapse" data-bs-target="#filterPanel" aria-expanded="false">
+                        <i class="bi bi-chevron-down"></i> Filters
+                    </button> *@
+
+                    <button class="filter-toggle-btn"
+                            type="button"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#filterPanel"
+                            aria-expanded="true"
+                            aria-controls="filterPanel"
+                            id="filterToggleBtn">
+                        <i class="bi bi-chevron-down" id="filterIcon"></i>
+                        Filters
+                    </button>
+
+                </div>
+                @if (!isStudent)
+                {
+                    <a asp-action="Create" class="btn btn-primary btn-add"><i class="bi bi-plus-lg me-1"></i> Add Project</a>
+                }
+            </div>
+
+            @* <div class="collapse" id="filterPanel"> *@
+            <div class="collapse show" id="filterPanel">
+                <div class="filter-panel">
+                    <form method="get" asp-action="Index">
+                        <div class="row g-3">
+                            <div class="col-md-4">
+                                <label class="form-label">Search</label>
+                                <input type="text" name="search" class="form-control" value="@ViewData["CurrentSearch"]" placeholder="Title, description...">
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label">Status</label>
+                                <select name="statusFilter" class="form-select">
+                                    <option value="">All Status</option>
+                                    <option value="Not Started" selected="@(ViewData["CurrentStatusFilter"]?.ToString() == "Not Started")">Not Started</option>
+                                    <option value="In Progress" selected="@(ViewData["CurrentStatusFilter"]?.ToString() == "In Progress")">In Progress</option>
+                                    <option value="Completed" selected="@(ViewData["CurrentStatusFilter"]?.ToString() == "Completed")">Completed</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4 d-flex align-items-end gap-2">
+                                <button type="submit" class="btn btn-primary"><i class="bi bi-funnel me-1"></i> Apply</button>
+                                <a asp-action="Index" class="btn btn-outline-secondary">Reset</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="table-responsive mt-3">
+                <table class="table table-hover" id="dataTable">
+                    <thead>
+                        <tr><th>#</th><th>Project Title</th><th>Status</th><th>Start Date</th><th>End Date</th><th>Assigned To</th><th>Actions</th></tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var p in Model)
+                        {
+                            var sc = p.Status switch { "Completed" => "badge-completed", "In Progress" => "badge-inprogress", _ => "badge-notstarted" };
+                            <tr>
+                                <td>@p.Id</td>
+                                <td><strong>@p.ProjectTitle</strong><br><small class="text-muted">@(p.Description.Length > 50 ? p.Description[..50] + "..." : p.Description)</small></td>
+                                <td>
+                                    <div class="dropdown">
+                                        <span class="badge @sc dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="cursor:pointer;">
+                                            @p.Status
+                                        </span>
+                                        <ul class="dropdown-menu dropdown-menu-end shadow-sm">
+                                            <li><h6 class="dropdown-header">Change Status</h6></li>
+                                            <li>
+                                                <form asp-action="UpdateStatus" method="post" style="display:inline;">
+                                                    @Html.AntiForgeryToken()
+                                                    <input type="hidden" name="id" value="@p.Id" />
+                                                    <input type="hidden" name="status" value="Not Started" />
+                                                    <button type="submit" class="dropdown-item @(p.Status == "Not Started" ? "active" : "")">
+                                                        <span class="badge badge-notstarted me-2">&bull;</span> Not Started
+                                                    </button>
+                                                </form>
+                                            </li>
+                                            <li>
+                                                <form asp-action="UpdateStatus" method="post" style="display:inline;">
+                                                    @Html.AntiForgeryToken()
+                                                    <input type="hidden" name="id" value="@p.Id" />
+                                                    <input type="hidden" name="status" value="In Progress" />
+                                                    <button type="submit" class="dropdown-item @(p.Status == "In Progress" ? "active" : "")">
+                                                        <span class="badge badge-inprogress me-2">&bull;</span> In Progress
+                                                    </button>
+                                                </form>
+                                            </li>
+                                            <li>
+                                                <form asp-action="UpdateStatus" method="post" style="display:inline;">
+                                                    @Html.AntiForgeryToken()
+                                                    <input type="hidden" name="id" value="@p.Id" />
+                                                    <input type="hidden" name="status" value="Completed" />
+                                                    <button type="submit" class="dropdown-item @(p.Status == "Completed" ? "active" : "")">
+                                                        <span class="badge badge-completed me-2">&bull;</span> Completed
+                                                    </button>
+                                                </form>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </td>
+                                <td>@p.StartDate.ToString("dd MMM yyyy")</td>
+                                <td>@p.EndDate.ToString("dd MMM yyyy")</td>
+                                <td>
+                                    @{
+                                        var facultyMember = p.AssignedMembers.FirstOrDefault(m => m.AssignedToType == "Faculty");
+                                        var studentMembers = p.AssignedMembers.Where(m => m.AssignedToType == "Student").ToList();
+                                    }
+                                    
+                                    @if (facultyMember != null)
+                                    {
+                                        <div class="mb-1">
+                                            <i class="bi bi-person-badge text-success me-1"></i>
+                                            <span class="fw-bold">@facultyMember.AssignedToName</span>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="mb-1 text-muted"><small>No Faculty</small></div>
+                                    }
+
+                                    @if (studentMembers.Any())
+                                    {
+                                        <div class="dropdown">
+                                            <span class="dropdown-toggle badge bg-info text-dark" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="cursor:pointer;">
+                                                <i class="bi bi-people-fill me-1"></i> @studentMembers.Count Students
+                                            </span>
+                                            <ul class="dropdown-menu shadow" style="min-width: 250px; padding: 8px 0;">
+                                                <li><h6 class="dropdown-header"><i class="bi bi-mortarboard-fill me-1"></i> Assigned Students</h6></li>
+                                                <li><hr class="dropdown-divider"></li>
+                                                @foreach (var student in studentMembers)
+                                                {
+                                                    <li class="px-3 py-1 d-flex align-items-center justify-content-between">
+                                                        <span>@student.AssignedToName</span>
+                                                        <span class="badge bg-warning text-dark" title="Tasks assigned">@student.TaskCount Tasks</span>
+                                                    </li>
+                                                }
+                                            </ul>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-secondary">0 Students</span>
+                                    }
+                                </td>
+                                <td class="action-btns">
+                                    @if (!isStudent)
+                                    {
+                                        <a asp-action="Edit" asp-route-id="@p.Id" class="btn btn-sm btn-outline-primary" title="Edit"><i class="bi bi-pencil-square"></i></a>
+                                        <a asp-action="Delete" asp-route-id="@p.Id" class="btn btn-sm btn-outline-danger" title="Delete" onclick="return confirm('Are you sure?')"><i class="bi bi-trash"></i></a>
+                                    }
+                                    else
+                                    {
+                                        <span class="text-muted"><i class="bi bi-eye"></i> View Only</span>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            @if (!Model.Any()) { <div class="text-center text-muted py-4"><i class="bi bi-inbox" style="font-size:48px;"></i><p class="mt-2">No projects found.</p></div> }
+        </div>
+    </div>
+</section>
+@section Scripts
+{
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+
+            const filterPanel = document.getElementById("filterPanel");
+            const filterIcon = document.getElementById("filterIcon");
+
+            filterPanel.addEventListener("shown.bs.collapse", function () {
+                filterIcon.classList.remove("bi-chevron-right");
+                filterIcon.classList.add("bi-chevron-down");
+            });
+
+            filterPanel.addEventListener("hidden.bs.collapse", function () {
+                filterIcon.classList.remove("bi-chevron-down");
+                filterIcon.classList.add("bi-chevron-right");
+            });
+
+        });
+    </script>
+}

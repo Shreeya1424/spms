@@ -1,0 +1,233 @@
+@model List<spms.Models.UserModel>
+
+@{
+    ViewData["Title"] = "Manage Users";
+    var roles = ViewData["Roles"] as List<string>;
+}
+
+<div class="pagetitle">
+    <h1>Manage Users</h1>
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="/">Home</a>
+            </li>
+            <li class="breadcrumb-item active">
+                Users
+            </li>
+        </ol>
+    </nav>
+</div>
+
+<section class="section">
+    <div class="card">
+        <div class="card-body">
+
+            <!-- Top Action Bar -->
+            <div class="top-action-bar mt-3">
+                <div class="d-flex align-items-center gap-2 flex-grow-1">
+
+                    <!-- Search Box -->
+                    <div class="search-box">
+                        <i class="bi bi-search search-icon"></i>
+                        <input type="text"
+                               id="tableSearchInput"
+                               class="form-control"
+                               placeholder="Search users..."
+                               value="@ViewData["CurrentSearch"]">
+                    </div>
+
+                    <!-- Filter Toggle Button -->
+                    <button class="filter-toggle-btn"
+                            type="button"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#filterPanel"
+                            aria-expanded="true"
+                            aria-controls="filterPanel"
+                            id="filterToggleBtn">
+
+                        <i class="bi bi-chevron-down" id="filterIcon"></i>
+                        Filters
+                    </button>
+
+                </div>
+
+                <a asp-action="Create" class="btn btn-primary btn-add">
+                    <i class="bi bi-plus-lg me-1"></i>
+                    Add User
+                </a>
+            </div>
+
+            <!-- Filter Panel (Visible by Default) -->
+            <div class="collapse show" id="filterPanel">
+                <div class="filter-panel mt-3">
+
+                    <form method="get" asp-action="Index">
+
+                        <div class="row g-3">
+
+                            <div class="col-md-3">
+                                <label class="form-label">Search</label>
+                                <input type="text"
+                                       name="search"
+                                       class="form-control"
+                                       value="@ViewData["CurrentSearch"]"
+                                       placeholder="Name, email, mobile..." />
+                            </div>
+
+                            <div class="col-md-3">
+                                <label class="form-label">Role</label>
+                                <select name="roleFilter" class="form-select">
+                                    <option value="">All Roles</option>
+
+                                    @if (roles != null)
+                                    {
+                                        foreach (var r in roles)
+                                        {
+                                            <option value="@r"
+                                                    selected="@(ViewData["CurrentRoleFilter"]?.ToString() == r)">
+                                                @r
+                                            </option>
+                                        }
+                                    }
+                                </select>
+                            </div>
+
+                            <div class="col-md-3">
+                                <label class="form-label">Status</label>
+                                <select name="statusFilter" class="form-select">
+                                    <option value="">All Status</option>
+
+                                    <option value="Active"
+                                            selected="@(ViewData["CurrentStatusFilter"]?.ToString() == "Active")">
+                                        Active
+                                    </option>
+
+                                    <option value="Inactive"
+                                            selected="@(ViewData["CurrentStatusFilter"]?.ToString() == "Inactive")">
+                                        Inactive
+                                    </option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-3 d-flex align-items-end gap-2">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="bi bi-funnel me-1"></i>
+                                    Apply
+                                </button>
+
+                                <a asp-action="Index"
+                                   class="btn btn-outline-secondary">
+                                    Reset
+                                </a>
+                            </div>
+
+                        </div>
+
+                    </form>
+
+                </div>
+            </div>
+
+            <!-- Users Table -->
+            <div class="table-responsive mt-3">
+                <table class="table table-hover" id="dataTable">
+
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Full Name</th>
+                            <th>Email</th>
+                            <th>Mobile</th>
+                            <th>Role</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @foreach (var user in Model)
+                        {
+                            <tr>
+                                <td>@user.Id</td>
+
+                                <td>
+                                    <strong>@user.FullName</strong>
+                                </td>
+
+                                <td>@user.Email</td>
+
+                                <td>@user.Mobile</td>
+
+                                <td>
+                                    <span class="badge bg-primary">
+                                        @user.Role
+                                    </span>
+                                </td>
+
+                                <td>
+                                    <span class="badge @(user.Status == "Active" ? "badge-active" : "badge-inactive")">
+                                        @user.Status
+                                    </span>
+                                </td>
+
+                                <td class="action-btns">
+
+                                    <a asp-action="Edit"
+                                       asp-route-id="@user.Id"
+                                       class="btn btn-sm btn-outline-primary"
+                                       title="Edit">
+                                        <i class="bi bi-pencil-square"></i>
+                                    </a>
+
+                                    <a asp-action="Delete"
+                                       asp-route-id="@user.Id"
+                                       class="btn btn-sm btn-outline-danger"
+                                       title="Delete"
+                                       onclick="return confirm('Are you sure?')">
+                                        <i class="bi bi-trash"></i>
+                                    </a>
+
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+
+                </table>
+            </div>
+
+            @if (!Model.Any())
+            {
+                <div class="text-center text-muted py-4">
+                    <i class="bi bi-inbox" style="font-size:48px;"></i>
+                    <p class="mt-2">No users found.</p>
+                </div>
+            }
+
+        </div>
+    </div>
+</section>
+
+@section Scripts
+{
+    <script>
+
+        document.addEventListener("DOMContentLoaded", function () {
+
+            const filterPanel = document.getElementById("filterPanel");
+            const filterIcon = document.getElementById("filterIcon");
+
+            filterPanel.addEventListener("shown.bs.collapse", function () {
+                filterIcon.classList.remove("bi-chevron-right");
+                filterIcon.classList.add("bi-chevron-down");
+            });
+
+            filterPanel.addEventListener("hidden.bs.collapse", function () {
+                filterIcon.classList.remove("bi-chevron-down");
+                filterIcon.classList.add("bi-chevron-right");
+            });
+
+        });
+
+    </script>
+}

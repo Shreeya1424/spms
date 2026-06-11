@@ -1,0 +1,208 @@
+@model spms.Models.DashboardViewModel
+@{
+    ViewData["Title"] = "Dashboard";
+    var userRole = ViewData["UserRole"]?.ToString() ?? "";
+    var isAdmin = userRole == "Admin";
+}
+
+<!-- Page Title -->
+<div class="pagetitle">
+    <h1>Dashboard</h1>
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">Home</a></li>
+            <li class="breadcrumb-item active">Dashboard</li>
+        </ol>
+    </nav>
+</div>
+
+<section class="section dashboard">
+    <div class="row">
+
+        @if (isAdmin)
+        {
+            <!-- Total Users Card -->
+            <div class="col-xxl-4 col-md-6">
+                <div class="card info-card users-card">
+                    <div class="card-body">
+                        <h5 class="card-title">Total Users</h5>
+                        <div class="d-flex align-items-center">
+                            <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                <i class="bi bi-people"></i>
+                            </div>
+                            <div class="ps-3">
+                                <h6>@Model.TotalUsers</h6>
+                                <span class="text-muted small pt-2">registered users</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Total Students Card -->
+            <div class="col-xxl-4 col-md-6">
+                <div class="card info-card students-card">
+                    <div class="card-body">
+                        <h5 class="card-title">Total Students</h5>
+                        <div class="d-flex align-items-center">
+                            <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                <i class="bi bi-mortarboard"></i>
+                            </div>
+                            <div class="ps-3">
+                                <h6>@Model.TotalStudents</h6>
+                                <span class="text-muted small pt-2">enrolled students</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Total Faculty Card -->
+            <div class="col-xxl-4 col-md-6">
+                <div class="card info-card faculty-card">
+                    <div class="card-body">
+                        <h5 class="card-title">Total Faculty</h5>
+                        <div class="d-flex align-items-center">
+                            <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                <i class="bi bi-person-badge"></i>
+                            </div>
+                            <div class="ps-3">
+                                <h6>@Model.TotalFaculty</h6>
+                                <span class="text-muted small pt-2">faculty members</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+
+        <!-- Total Projects Card -->
+        <div class="col-xxl-4 col-md-6">
+            <div class="card info-card projects-card">
+                <div class="card-body">
+                    <h5 class="card-title">@(isAdmin ? "Total Projects" : "My Projects")</h5>
+                    <div class="d-flex align-items-center">
+                        <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                            <i class="bi bi-folder"></i>
+                        </div>
+                        <div class="ps-3">
+                            <h6>@Model.TotalProjects</h6>
+                            <span class="text-muted small pt-2">active projects</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Total Tasks Card -->
+        <div class="col-xxl-4 col-md-6">
+            <div class="card info-card tasks-card">
+                <div class="card-body">
+                    <h5 class="card-title">@(isAdmin ? "Total Tasks" : "My Tasks")</h5>
+                    <div class="d-flex align-items-center">
+                        <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                            <i class="bi bi-list-task"></i>
+                        </div>
+                        <div class="ps-3">
+                            <h6>@Model.TotalTasks</h6>
+                            <span class="text-muted small pt-2">total tasks</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Charts Row -->
+    <div class="row">
+        <!-- Project Status Chart -->
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Project Status Distribution</h5>
+                    <div id="projectStatusChart"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Task Priority Chart -->
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Task Priority Distribution</h5>
+                    <div id="taskPriorityChart"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Recent Projects Table -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Recent Projects</h5>
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Project Title</th>
+                                <th>Status</th>
+                                <th>Start Date</th>
+                                <th>End Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var project in spms.Services.DummyDataService.Projects.Take(5))
+                            {
+                                <tr>
+                                    <td>@project.Id</td>
+                                    <td>@project.ProjectTitle</td>
+                                    <td>
+                                        @{
+                                            var statusClass = project.Status switch
+                                            {
+                                                "Completed" => "badge-completed",
+                                                "In Progress" => "badge-inprogress",
+                                                _ => "badge-notstarted"
+                                            };
+                                        }
+                                        <span class="badge @statusClass">@project.Status</span>
+                                    </td>
+                                    <td>@project.StartDate.ToString("dd MMM yyyy")</td>
+                                    <td>@project.EndDate.ToString("dd MMM yyyy")</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+<script>
+    // Project Status Pie Chart
+    var projectChart = new ApexCharts(document.querySelector("#projectStatusChart"), {
+        series: [@Model.ProjectsNotStarted, @Model.ProjectsInProgress, @Model.ProjectsCompleted],
+        chart: { type: 'pie', height: 300 },
+        labels: ['Not Started', 'In Progress', 'Completed'],
+        colors: ['#6c757d', '#0dcaf0', '#2eca6a'],
+        legend: { position: 'bottom' }
+    });
+    projectChart.render();
+
+    // Task Priority Bar Chart
+    var taskChart = new ApexCharts(document.querySelector("#taskPriorityChart"), {
+        series: [{ name: 'Tasks', data: [@Model.TasksLow, @Model.TasksMedium, @Model.TasksHigh, @Model.TasksCritical] }],
+        chart: { type: 'bar', height: 300 },
+        plotOptions: { bar: { borderRadius: 4, columnWidth: '50%' } },
+        xaxis: { categories: ['Low', 'Medium', 'High', 'Critical'] },
+        colors: ['#4154f1'],
+        dataLabels: { enabled: true }
+    });
+    taskChart.render();
+</script>
+}

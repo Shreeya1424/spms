@@ -1,0 +1,109 @@
+@*
+    Sidebar Navigation Partial View
+    Uses ViewData["ActivePage"] to highlight the current page.
+    Shows/hides menu items based on logged-in user's role.
+*@
+
+@{
+    var activePage = ViewData["ActivePage"]?.ToString() ?? "";
+    var userRole = User.FindFirst(System.Security.Claims.ClaimTypes.Role)?.Value ?? "";
+    var isAdmin = userRole == "Admin";
+}
+
+<aside id="sidebar" class="sidebar">
+
+    <ul class="sidebar-nav" id="sidebar-nav">
+
+        <!-- Dashboard -->
+        <li class="nav-item">
+            <a class="nav-link @(activePage != "Dashboard" ? "collapsed" : "")"
+               asp-controller="Home" asp-action="Index">
+                <i class="bi bi-grid"></i>
+                <span>Dashboard</span>
+            </a>
+        </li>
+
+        @if (isAdmin)
+        {
+            <!-- Admin-Only Modules -->
+            <li class="nav-heading">Admin Modules</li>
+
+            <!-- Manage Roles -->
+            <li class="nav-item">
+                <a class="nav-link @(activePage != "Roles" ? "collapsed" : "")"
+                   asp-controller="Role" asp-action="Index">
+                    <i class="bi bi-shield-lock"></i>
+                    <span>Manage Roles</span>
+                </a>
+            </li>
+
+            <!-- Manage Users -->
+            <li class="nav-item">
+                <a class="nav-link @(activePage != "Users" ? "collapsed" : "")"
+                   asp-controller="User" asp-action="Index">
+                    <i class="bi bi-people"></i>
+                    <span>Manage Users</span>
+                </a>
+            </li>
+
+            <!-- Manage Students -->
+            <li class="nav-item">
+                <a class="nav-link @(activePage != "Students" ? "collapsed" : "")"
+                   asp-controller="Student" asp-action="Index">
+                    <i class="bi bi-mortarboard"></i>
+                    <span>Manage Students</span>
+                </a>
+            </li>
+
+            <!-- Manage Faculty -->
+            <li class="nav-item">
+                <a class="nav-link @(activePage != "Faculty" ? "collapsed" : "")"
+                   asp-controller="Faculty" asp-action="Index">
+                    <i class="bi bi-person-badge"></i>
+                    <span>Manage Faculty</span>
+                </a>
+            </li>
+
+            <!-- Role & Permissions -->
+            <li class="nav-item">
+                <a class="nav-link @(activePage != "Permissions" ? "collapsed" : "")"
+                   asp-controller="Permission" asp-action="Index">
+                    <i class="bi bi-key"></i>
+                    <span>Role &amp; Permissions</span>
+                </a>
+            </li>
+        }
+
+        <!-- Projects & Tasks — visible to all roles -->
+        <li class="nav-heading">@(isAdmin ? "Project Management" : "My Work")</li>
+
+        <!-- Manage Projects -->
+        <li class="nav-item">
+            <a class="nav-link @(activePage != "Projects" ? "collapsed" : "")"
+               asp-controller="Project" asp-action="Index">
+                <i class="bi bi-folder"></i>
+                <span>@(isAdmin ? "Manage Projects" : "My Projects")</span>
+            </a>
+        </li>
+
+        <!-- Manage Tasks -->
+        <li class="nav-item">
+            <a class="nav-link @(activePage != "Tasks" ? "collapsed" : "")"
+               asp-controller="ProjectTask" asp-action="Index">
+                <i class="bi bi-list-task"></i>
+                <span>@(isAdmin ? "Manage Tasks" : "My Tasks")</span>
+            </a>
+        </li>
+
+        <!-- Scores & Remarks — visible to all roles -->
+        <li class="nav-item">
+            <a class="nav-link @(activePage != "Scores" ? "collapsed" : "")"
+               asp-controller="Score" asp-action="Index">
+                <i class="bi bi-award"></i>
+                <span>@(userRole == "Student" ? "My Scores" : "Scores & Remarks")</span>
+            </a>
+        </li>
+
+    </ul>
+
+</aside>

@@ -1,0 +1,216 @@
+@model List<spms.Models.StudentModel>
+
+@{
+    ViewData["Title"] = "Manage Students";
+    var departments = ViewData["Departments"] as List<string>;
+}
+
+<div class="pagetitle">
+    <h1>Manage Students</h1>
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="/">Home</a>
+            </li>
+            <li class="breadcrumb-item active">
+                Students
+            </li>
+        </ol>
+    </nav>
+</div>
+
+<section class="section">
+    <div class="card">
+        <div class="card-body">
+
+            <!-- Top Action Bar -->
+            <div class="top-action-bar mt-3">
+                <div class="d-flex align-items-center gap-2 flex-grow-1">
+
+                    <!-- Search Box -->
+                    <div class="search-box">
+                        <i class="bi bi-search search-icon"></i>
+                        <input type="text"
+                               id="tableSearchInput"
+                               class="form-control"
+                               placeholder="Search students...">
+                    </div>
+
+                    <!-- Filter Toggle Button -->
+                    <button class="filter-toggle-btn"
+                            type="button"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#filterPanel"
+                            aria-expanded="true"
+                            aria-controls="filterPanel"
+                            id="filterToggleBtn">
+
+                        <i class="bi bi-chevron-down" id="filterIcon"></i>
+                        Filters
+                    </button>
+
+                </div>
+
+                <a asp-action="Create" class="btn btn-primary btn-add">
+                    <i class="bi bi-plus-lg me-1"></i>
+                    Add Student
+                </a>
+            </div>
+
+            <!-- Filter Panel (Visible by Default) -->
+            <div class="collapse show" id="filterPanel">
+                <div class="filter-panel mt-3">
+
+                    <form method="get" asp-action="Index">
+
+                        <div class="row g-3">
+
+                            <div class="col-md-4">
+                                <label class="form-label">Search</label>
+                                <input type="text"
+                                       name="search"
+                                       class="form-control"
+                                       value="@ViewData["CurrentSearch"]"
+                                       placeholder="Name, enrollment, email..." />
+                            </div>
+
+                            <div class="col-md-4">
+                                <label class="form-label">Department</label>
+
+                                <select name="departmentFilter" class="form-select">
+                                    <option value="">All Departments</option>
+
+                                    @if (departments != null)
+                                    {
+                                        foreach (var d in departments)
+                                        {
+                                            <option value="@d"
+                                                    selected="@(ViewData["CurrentDepartmentFilter"]?.ToString() == d)">
+                                                @d
+                                            </option>
+                                        }
+                                    }
+                                </select>
+                            </div>
+
+                            <div class="col-md-4 d-flex align-items-end gap-2">
+
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="bi bi-funnel me-1"></i>
+                                    Apply
+                                </button>
+
+                                <a asp-action="Index"
+                                   class="btn btn-outline-secondary">
+                                    Reset
+                                </a>
+
+                            </div>
+
+                        </div>
+
+                    </form>
+
+                </div>
+            </div>
+
+            <!-- Students Table -->
+            <div class="table-responsive mt-3">
+
+                <table class="table table-hover" id="dataTable">
+
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Student Name</th>
+                            <th>Enrollment No</th>
+                            <th>Department</th>
+                            <th>Email</th>
+                            <th>Mobile</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @foreach (var s in Model)
+                        {
+                            <tr>
+                                <td>@s.Id</td>
+
+                                <td>
+                                    <strong>@s.StudentName</strong>
+                                </td>
+
+                                <td>@s.EnrollmentNo</td>
+
+                                <td>
+                                    <span class="badge bg-info">
+                                        @s.Department
+                                    </span>
+                                </td>
+
+                                <td>@s.Email</td>
+
+                                <td>@s.Mobile</td>
+
+                                <td class="action-btns">
+
+                                    <a asp-action="Edit"
+                                       asp-route-id="@s.Id"
+                                       class="btn btn-sm btn-outline-primary"
+                                       title="Edit">
+                                        <i class="bi bi-pencil-square"></i>
+                                    </a>
+
+                                    <a asp-action="Delete"
+                                       asp-route-id="@s.Id"
+                                       class="btn btn-sm btn-outline-danger"
+                                       title="Delete"
+                                       onclick="return confirm('Are you sure?')">
+                                        <i class="bi bi-trash"></i>
+                                    </a>
+
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+
+                </table>
+
+            </div>
+
+            @if (!Model.Any())
+            {
+                <div class="text-center text-muted py-4">
+                    <i class="bi bi-inbox" style="font-size:48px;"></i>
+                    <p class="mt-2">No students found.</p>
+                </div>
+            }
+
+        </div>
+    </div>
+</section>
+
+@section Scripts
+{
+    <script>
+
+        document.addEventListener("DOMContentLoaded", function () {
+
+            const filterPanel = document.getElementById("filterPanel");
+            const filterIcon = document.getElementById("filterIcon");
+
+            filterPanel.addEventListener("shown.bs.collapse", function () {
+                filterIcon.classList.remove("bi-chevron-right");
+                filterIcon.classList.add("bi-chevron-down");
+            });
+
+            filterPanel.addEventListener("hidden.bs.collapse", function () {
+                filterIcon.classList.remove("bi-chevron-down");
+                filterIcon.classList.add("bi-chevron-right");
+            });
+
+        });
+
+    </script>
+}

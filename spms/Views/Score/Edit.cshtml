@@ -1,0 +1,99 @@
+@model spms.Models.ScoreModel
+@{
+    ViewData["Title"] = "Edit Score";
+    var projects = ViewData["Projects"] as List<spms.Models.ProjectModel> ?? new();
+    var students = ViewData["Students"] as List<spms.Models.StudentModel> ?? new();
+    var assignments = ViewData["ProjectAssignments"] as List<spms.Models.ProjectAssignmentModel> ?? new List<spms.Models.ProjectAssignmentModel>();
+}
+
+<div class="pagetitle">
+    <h1>Edit Score</h1>
+    <nav><ol class="breadcrumb"><li class="breadcrumb-item"><a href="/">Home</a></li><li class="breadcrumb-item"><a asp-action="Index">Scores</a></li><li class="breadcrumb-item active">Edit</li></ol></nav>
+</div>
+
+<section class="section">
+    <div class="card">
+        <div class="card-body pt-4">
+            <form asp-action="Edit" method="post">
+                @Html.AntiForgeryToken()
+                <input asp-for="Id" type="hidden" />
+                <input asp-for="ScoredByFacultyId" type="hidden" />
+                <div class="row mb-3">
+                    <div class="col-sm-4">
+                        <label asp-for="ProjectId" class="form-label"></label>
+                        <select asp-for="ProjectId" class="form-select" id="projectId" onchange="updateAssigneeList()">
+                            <option value="">-- Select Project --</option>
+                            @foreach (var p in projects)
+                            {
+                                <option value="@p.Id" selected="@(p.Id == Model.ProjectId)">@p.ProjectTitle</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="col-sm-4">
+                        <label asp-for="StudentId" class="form-label"></label>
+                        <select asp-for="StudentId" class="form-select" id="studentId">
+                            <option value="">-- Select Project First --</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-4">
+                        <label asp-for="Score" class="form-label"></label>
+                        <input asp-for="Score" class="form-control" type="number" min="0" max="100">
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-sm-12">
+                        <label asp-for="Remarks" class="form-label"></label>
+                        <textarea asp-for="Remarks" class="form-control" rows="3"></textarea>
+                    </div>
+                </div>
+                <div>
+                    <button type="submit" class="btn btn-primary"><i class="bi bi-check-lg me-1"></i> Update Score</button>
+                    <a asp-action="Index" class="btn btn-secondary ms-2">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+<partial name="_ValidationScriptsPartial" />
+<script>
+    var currentStudentId = '@Model.StudentId';
+    
+    var projectAssignments = [
+        @foreach (var p in projects)
+        {
+            var assignedStudentIds = assignments.Where(a => a.ProjectId == p.Id && a.AssignedToType == "Student").Select(a => a.AssignedToId).ToList();
+            var assignedStudents = students.Where(s => assignedStudentIds.Contains(s.Id)).Select(s => $"{{id:{s.Id}, name:'{s.StudentName}'}}").ToList();
+            <text>
+            {
+                projectId: @p.Id,
+                students: [@Html.Raw(string.Join(",", assignedStudents))]
+            },
+            </text>
+        }
+    ];
+
+    function updateAssigneeList() {
+        var projectId = document.getElementById('projectId').value;
+        var select = document.getElementById('studentId');
+        select.innerHTML = '<option value="">-- Select Student --</option>';
+        
+        if (!projectId) return;
+
+        var projData = projectAssignments.find(x => x.projectId == projectId);
+        if (projData && projData.students) {
+            projData.students.forEach(function(item) {
+                var o = document.createElement('option');
+                o.value = item.id;
+                o.textContent = item.name;
+                if (item.id.toString() === currentStudentId) o.selected = true;
+                select.appendChild(o);
+            });
+        }
+    }
+    
+    // Run on load to select the initial student
+    updateAssigneeList();
+</script>
+}

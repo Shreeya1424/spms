@@ -1,0 +1,75 @@
+@model List<spms.Models.ScoreModel>
+@{
+    ViewData["Title"] = "Scores & Remarks";
+    var userRole = ViewData["UserRole"]?.ToString() ?? "";
+    var isStudent = userRole == "Student";
+}
+
+<div class="pagetitle">
+    <h1>@(isStudent ? "My Scores & Remarks" : "Manage Scores")</h1>
+    <nav><ol class="breadcrumb"><li class="breadcrumb-item"><a href="/">Home</a></li><li class="breadcrumb-item active">Scores</li></ol></nav>
+</div>
+
+<section class="section">
+    <div class="card">
+        <div class="card-body">
+            <div class="top-action-bar mt-3">
+                <div class="d-flex align-items-center gap-2 flex-grow-1">
+                    <div class="search-box">
+                        <i class="bi bi-search search-icon"></i>
+                        <input type="text" id="tableSearchInput" class="form-control" placeholder="Search scores...">
+                    </div>
+                </div>
+                @if (!isStudent)
+                {
+                    <a asp-action="Create" class="btn btn-primary btn-add"><i class="bi bi-plus-lg me-1"></i> Assign Score</a>
+                }
+            </div>
+
+            <div class="table-responsive mt-3">
+                <table class="table table-hover" id="dataTable">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Project</th>
+                            <th>Student</th>
+                            <th>Score</th>
+                            <th>Remarks</th>
+                            @if (!isStudent) { <th>Scored By</th> }
+                            <th>Date</th>
+                            @if (!isStudent) { <th>Actions</th> }
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var s in Model)
+                        {
+                            var scoreBadge = s.Score >= 80 ? "bg-success" : s.Score >= 60 ? "bg-warning text-dark" : "bg-danger";
+                            <tr>
+                                <td>@s.Id</td>
+                                <td><strong>@s.ProjectTitle</strong></td>
+                                <td>@s.StudentName</td>
+                                <td><span class="badge @scoreBadge" style="font-size: 14px;">@s.Score / 100</span></td>
+                                <td style="max-width: 280px;">
+                                    <small class="text-muted">@s.Remarks</small>
+                                </td>
+                                @if (!isStudent)
+                                {
+                                    <td>@s.FacultyName</td>
+                                }
+                                <td>@s.ScoredDate.ToString("dd MMM yyyy")</td>
+                                @if (!isStudent)
+                                {
+                                    <td class="action-btns">
+                                        <a asp-action="Edit" asp-route-id="@s.Id" class="btn btn-sm btn-outline-primary" title="Edit"><i class="bi bi-pencil-square"></i></a>
+                                        <a asp-action="Delete" asp-route-id="@s.Id" class="btn btn-sm btn-outline-danger" title="Delete" onclick="return confirm('Are you sure?')"><i class="bi bi-trash"></i></a>
+                                    </td>
+                                }
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            @if (!Model.Any()) { <div class="text-center text-muted py-4"><i class="bi bi-inbox" style="font-size:48px;"></i><p class="mt-2">No scores found.</p></div> }
+        </div>
+    </div>
+</section>

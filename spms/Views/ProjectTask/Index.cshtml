@@ -1,0 +1,180 @@
+@model List<spms.Models.ProjectTaskModel>
+@{
+    ViewData["Title"] = "Manage Tasks";
+    var userRole = ViewData["UserRole"]?.ToString() ?? "";
+    var isStudent = userRole == "Student";
+}
+
+<div class="pagetitle">
+    <h1>Manage Tasks</h1>
+    <nav><ol class="breadcrumb"><li class="breadcrumb-item"><a href="/">Home</a></li><li class="breadcrumb-item active">Tasks</li></ol></nav>
+</div>
+
+<section class="section">
+    <div class="card">
+        <div class="card-body">
+            <div class="top-action-bar mt-3">
+                <div class="d-flex align-items-center gap-2 flex-grow-1">
+                    <div class="search-box">
+                        <i class="bi bi-search search-icon"></i>
+                        <input type="text" id="tableSearchInput" class="form-control" placeholder="Search tasks...">
+                    </div>
+                    <button class="filter-toggle-btn"
+                            type="button"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#filterPanel"
+                            aria-expanded="true"
+                            aria-controls="filterPanel"
+                            id="filterToggleBtn">
+                        <i class="bi bi-chevron-down" id="filterIcon"></i>
+                        Filters
+                    </button>
+                </div>
+                @if (!isStudent)
+                {
+                    <a asp-action="Create" class="btn btn-primary btn-add"><i class="bi bi-plus-lg me-1"></i> Add Task</a>
+                }
+            </div>
+
+            <div class="collapse show" id="filterPanel">
+                <div class="filter-panel">
+                    <form method="get" asp-action="Index">
+                        <div class="row g-3">
+                            <div class="col-md-3">
+                                <label class="form-label">Search</label>
+                                <input type="text" name="search" class="form-control" value="@ViewData["CurrentSearch"]" placeholder="Title, description...">
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label">Priority</label>
+                                <select name="priorityFilter" class="form-select">
+                                    <option value="">All</option>
+                                    <option value="Low" selected="@(ViewData["CurrentPriorityFilter"]?.ToString() == "Low")">Low</option>
+                                    <option value="Medium" selected="@(ViewData["CurrentPriorityFilter"]?.ToString() == "Medium")">Medium</option>
+                                    <option value="High" selected="@(ViewData["CurrentPriorityFilter"]?.ToString() == "High")">High</option>
+                                    <option value="Critical" selected="@(ViewData["CurrentPriorityFilter"]?.ToString() == "Critical")">Critical</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label">Status</label>
+                                <select name="statusFilter" class="form-select">
+                                    <option value="">All</option>
+                                    <option value="Pending" selected="@(ViewData["CurrentStatusFilter"]?.ToString() == "Pending")">Pending</option>
+                                    <option value="In Progress" selected="@(ViewData["CurrentStatusFilter"]?.ToString() == "In Progress")">In Progress</option>
+                                    <option value="Completed" selected="@(ViewData["CurrentStatusFilter"]?.ToString() == "Completed")">Completed</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3 d-flex align-items-end gap-2">
+                                <button type="submit" class="btn btn-primary"><i class="bi bi-funnel me-1"></i> Apply</button>
+                                <a asp-action="Index" class="btn btn-outline-secondary">Reset</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="table-responsive mt-3">
+                <table class="table table-hover" id="dataTable">
+                    <thead>
+                        <tr><th>#</th><th>Task Title</th><th>Project</th><th>Priority</th><th>Status</th><th>Assigned To</th><th>Due Date</th><th>Actions</th></tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var t in Model)
+                        {
+                            var pc = t.Priority switch { "Low" => "badge-low", "Medium" => "badge-medium", "High" => "badge-high", "Critical" => "badge-critical", _ => "bg-secondary" };
+                            var sc = t.Status switch { "Completed" => "badge-completed", "In Progress" => "badge-inprogress", "Pending" => "badge-pending", _ => "badge-notstarted" };
+                            <tr>
+                                <td>@t.Id</td>
+                                <td><strong>@t.TaskTitle</strong></td>
+                                <td>@t.ProjectTitle</td>
+                                <td><span class="badge @pc">@t.Priority</span></td>
+                                <td>
+                                    @if (!isStudent)
+                                    {
+                                        <div class="dropdown">
+                                            <span class="badge @sc dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="cursor:pointer;">
+                                                @t.Status
+                                            </span>
+                                            <ul class="dropdown-menu dropdown-menu-end shadow-sm">
+                                                <li><h6 class="dropdown-header">Change Status</h6></li>
+                                                <li>
+                                                    <form asp-action="UpdateStatus" method="post" style="display:inline;">
+                                                        @Html.AntiForgeryToken()
+                                                        <input type="hidden" name="id" value="@t.Id" />
+                                                        <input type="hidden" name="status" value="Pending" />
+                                                        <button type="submit" class="dropdown-item @(t.Status == "Pending" ? "active" : "")">
+                                                            <span class="badge badge-pending me-2">&bull;</span> Pending
+                                                        </button>
+                                                    </form>
+                                                </li>
+                                                <li>
+                                                    <form asp-action="UpdateStatus" method="post" style="display:inline;">
+                                                        @Html.AntiForgeryToken()
+                                                        <input type="hidden" name="id" value="@t.Id" />
+                                                        <input type="hidden" name="status" value="In Progress" />
+                                                        <button type="submit" class="dropdown-item @(t.Status == "In Progress" ? "active" : "")">
+                                                            <span class="badge badge-inprogress me-2">&bull;</span> In Progress
+                                                        </button>
+                                                    </form>
+                                                </li>
+                                                <li>
+                                                    <form asp-action="UpdateStatus" method="post" style="display:inline;">
+                                                        @Html.AntiForgeryToken()
+                                                        <input type="hidden" name="id" value="@t.Id" />
+                                                        <input type="hidden" name="status" value="Completed" />
+                                                        <button type="submit" class="dropdown-item @(t.Status == "Completed" ? "active" : "")">
+                                                            <span class="badge badge-completed me-2">&bull;</span> Completed
+                                                        </button>
+                                                    </form>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge @sc">@t.Status</span>
+                                    }
+                                </td>
+                                <td>@t.AssignedToName<br><small class="text-muted">(@t.AssignedToType)</small></td>
+                                <td>@t.DueDate.ToString("dd MMM yyyy")</td>
+                                <td class="action-btns">
+                                    @if (!isStudent)
+                                    {
+                                        <a asp-action="Edit" asp-route-id="@t.Id" class="btn btn-sm btn-outline-primary" title="Edit"><i class="bi bi-pencil-square"></i></a>
+                                        <a asp-action="Delete" asp-route-id="@t.Id" class="btn btn-sm btn-outline-danger" title="Delete" onclick="return confirm('Are you sure?')"><i class="bi bi-trash"></i></a>
+                                    }
+                                    else
+                                    {
+                                        <span class="text-muted"><i class="bi bi-eye"></i> View Only</span>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            @if (!Model.Any()) { <div class="text-center text-muted py-4"><i class="bi bi-inbox" style="font-size:48px;"></i><p class="mt-2">No tasks found.</p></div> }
+        </div>
+    </div>
+</section>
+
+@section Scripts
+{
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+
+            const filterPanel = document.getElementById("filterPanel");
+            const filterIcon = document.getElementById("filterIcon");
+
+            filterPanel.addEventListener("shown.bs.collapse", function () {
+                filterIcon.classList.remove("bi-chevron-right");
+                filterIcon.classList.add("bi-chevron-down");
+            });
+
+            filterPanel.addEventListener("hidden.bs.collapse", function () {
+                filterIcon.classList.remove("bi-chevron-down");
+                filterIcon.classList.add("bi-chevron-right");
+            });
+
+        });
+    </script>
+}

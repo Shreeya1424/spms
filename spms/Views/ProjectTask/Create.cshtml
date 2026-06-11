@@ -1,0 +1,114 @@
+@model spms.Models.ProjectTaskModel
+@{
+    ViewData["Title"] = "Add Task";
+    var students = ViewData["Students"] as List<spms.Models.StudentModel>;
+    var projects = ViewData["Projects"] as List<spms.Models.ProjectModel>;
+    var assignments = ViewData["ProjectAssignments"] as List<spms.Models.ProjectAssignmentModel> ?? new List<spms.Models.ProjectAssignmentModel>();
+}
+
+<div class="pagetitle">
+    <h1>Add Task</h1>
+    <nav><ol class="breadcrumb"><li class="breadcrumb-item"><a href="/">Home</a></li><li class="breadcrumb-item"><a asp-controller="ProjectTask" asp-action="Index">Tasks</a></li><li class="breadcrumb-item active">Add</li></ol></nav>
+</div>
+
+<section class="section">
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Task Details</h5>
+            <form asp-action="Create" method="post">
+                @Html.AntiForgeryToken()
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+                <div class="row mb-3">
+                    <label asp-for="TaskTitle" class="col-sm-2 col-form-label"></label>
+                    <div class="col-sm-10"><input asp-for="TaskTitle" class="form-control" placeholder="Enter task title"><span asp-validation-for="TaskTitle" class="text-danger"></span></div>
+                </div>
+                <div class="row mb-3">
+                    <label asp-for="Description" class="col-sm-2 col-form-label"></label>
+                    <div class="col-sm-10"><textarea asp-for="Description" class="form-control" rows="3" placeholder="Enter description"></textarea></div>
+                </div>
+                <div class="row mb-3">
+                    <label asp-for="ProjectId" class="col-sm-2 col-form-label"></label>
+                    <div class="col-sm-4">
+                        <select asp-for="ProjectId" class="form-select" id="projectId" onchange="updateAssigneeList()">
+                            <option value="">-- Select Project --</option>
+                            @if (projects != null) { foreach (var p in projects) { <option value="@p.Id">@p.ProjectTitle</option> } }
+                        </select>
+                    </div>
+                    <label asp-for="DueDate" class="col-sm-2 col-form-label"></label>
+                    <div class="col-sm-4"><input asp-for="DueDate" type="date" class="form-control"><span asp-validation-for="DueDate" class="text-danger"></span></div>
+                </div>
+                <div class="row mb-3">
+                    <label asp-for="Priority" class="col-sm-2 col-form-label"></label>
+                    <div class="col-sm-4">
+                        <select asp-for="Priority" class="form-select">
+                            <option>Low</option><option>Medium</option><option>High</option><option>Critical</option>
+                        </select>
+                    </div>
+                    <label asp-for="Status" class="col-sm-2 col-form-label"></label>
+                    <div class="col-sm-4">
+                        <select asp-for="Status" class="form-select">
+                            <option>Pending</option><option>In Progress</option><option>Completed</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label asp-for="AssignedToType" class="col-sm-2 col-form-label"></label>
+                    <div class="col-sm-4">
+                        <input type="text" readonly class="form-control" value="Student">
+                        <input type="hidden" asp-for="AssignedToType" value="Student" />
+                    </div>
+                    <label asp-for="AssignedToId" class="col-sm-2 col-form-label"></label>
+                    <div class="col-sm-4">
+                        <select asp-for="AssignedToId" class="form-select" id="assignedToId">
+                            <option value="">-- Select Project First --</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-sm-10 offset-sm-2">
+                        <button type="submit" class="btn btn-primary"><i class="bi bi-check-lg me-1"></i> Save</button>
+                        <a asp-action="Index" class="btn btn-secondary ms-2"><i class="bi bi-arrow-left me-1"></i> Back</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+<partial name="_ValidationScriptsPartial" />
+<script>
+    // Build mapping of ProjectId -> List of Assigned Student Objects
+    var projectAssignments = [
+        @foreach (var p in projects ?? new List<spms.Models.ProjectModel>())
+        {
+            var assignedStudentIds = assignments.Where(a => a.ProjectId == p.Id && a.AssignedToType == "Student").Select(a => a.AssignedToId).ToList();
+            var assignedStudents = students?.Where(s => assignedStudentIds.Contains(s.Id)).Select(s => $"{{id:{s.Id}, name:'{s.StudentName}'}}") ?? new List<string>();
+            <text>
+            {
+                projectId: @p.Id,
+                students: [@Html.Raw(string.Join(",", assignedStudents))]
+            },
+            </text>
+        }
+    ];
+
+    function updateAssigneeList() {
+        var projectId = document.getElementById('projectId').value;
+        var select = document.getElementById('assignedToId');
+        select.innerHTML = '<option value="">-- Select Person --</option>';
+        
+        if (!projectId) return;
+
+        var projData = projectAssignments.find(x => x.projectId == projectId);
+        if (projData && projData.students) {
+            projData.students.forEach(function(item) {
+                var o = document.createElement('option');
+                o.value = item.id;
+                o.textContent = item.name;
+                select.appendChild(o);
+            });
+        }
+    }
+</script>
+}
