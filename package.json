@@ -4,7 +4,7 @@
   "description": "ASP.NET Core 8.0 Project",
   "main": "index.js",
   "scripts": {
-    "start": "echo 'ERROR: This service is misconfigured as a Node.js app. Please change the Runtime to Docker in Render Settings to run the .NET application.' && exit 1",
+    "start": "sh start.sh",
     "build": "echo 'Building...'"
   },
   "author": "",
