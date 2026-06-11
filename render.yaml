@@ -1,0 +1,7 @@
+services:
+  - type: web
+    name: spms-1
+    runtime: docker
+    envVars:
+      - key: ASPNETCORE_ENVIRONMENT
+        value: Production
