@@ -6,6 +6,6 @@ services:
       - key: ASPNETCORE_ENVIRONMENT
         value: Production
       - key: FORCE_REDEPLOY
-        value: "2"
+        value: "3"
       - key: PORT
         value: "10000"
