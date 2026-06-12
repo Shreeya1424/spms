@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.HttpOverrides;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+Console.WriteLine("SPMS Application Starting - Version Premium UI v2");
 builder.Services.AddControllersWithViews();
 
 // ===== Cookie Authentication Configuration =====
