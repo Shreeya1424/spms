@@ -7,7 +7,6 @@ D:\spms\spms\bin\Debug\net8.0\spms.deps.json
 D:\spms\spms\bin\Debug\net8.0\spms.runtimeconfig.json
 D:\spms\spms\bin\Debug\net8.0\spms.dll
 D:\spms\spms\bin\Debug\net8.0\spms.pdb
-D:\spms\spms\obj\Debug\net8.0\rpswa.dswa.cache.json
 D:\spms\spms\obj\Debug\net8.0\spms.GeneratedMSBuildEditorConfig.editorconfig
 D:\spms\spms\obj\Debug\net8.0\spms.AssemblyInfoInputs.cache
 D:\spms\spms\obj\Debug\net8.0\spms.AssemblyInfo.cs
@@ -15,9 +14,6 @@ D:\spms\spms\obj\Debug\net8.0\spms.csproj.CoreCompileInputs.cache
 D:\spms\spms\obj\Debug\net8.0\spms.MvcApplicationPartsAssemblyInfo.cache
 D:\spms\spms\obj\Debug\net8.0\spms.RazorAssemblyInfo.cache
 D:\spms\spms\obj\Debug\net8.0\spms.RazorAssemblyInfo.cs
-D:\spms\spms\obj\Debug\net8.0\rjimswa.dswa.cache.json
-D:\spms\spms\obj\Debug\net8.0\rjsmrazor.dswa.cache.json
-D:\spms\spms\obj\Debug\net8.0\rjsmcshtml.dswa.cache.json
 D:\spms\spms\obj\Debug\net8.0\scopedcss\Views\Shared\_Layout.cshtml.rz.scp.css
 D:\spms\spms\obj\Debug\net8.0\scopedcss\bundle\spms.styles.css
 D:\spms\spms\obj\Debug\net8.0\scopedcss\projectbundle\spms.bundle.scp.css
@@ -25,8 +21,6 @@ D:\spms\spms\obj\Debug\net8.0\staticwebassets.build.json
 D:\spms\spms\obj\Debug\net8.0\staticwebassets.build.json.cache
 D:\spms\spms\obj\Debug\net8.0\staticwebassets.development.json
 D:\spms\spms\obj\Debug\net8.0\staticwebassets.build.endpoints.json
-D:\spms\spms\obj\Debug\net8.0\swae.build.ex.cache
-D:\spms\spms\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
 D:\spms\spms\obj\Debug\net8.0\spms.dll
 D:\spms\spms\obj\Debug\net8.0\refint\spms.dll
 D:\spms\spms\obj\Debug\net8.0\spms.pdb
@@ -61,3 +55,4 @@ C:\Users\dhols\Downloads\spms (1)\spms\spms\obj\Debug\net8.0\refint\spms.dll
 C:\Users\dhols\Downloads\spms (1)\spms\spms\obj\Debug\net8.0\spms.pdb
 C:\Users\dhols\Downloads\spms (1)\spms\spms\obj\Debug\net8.0\spms.genruntimeconfig.cache
 C:\Users\dhols\Downloads\spms (1)\spms\spms\obj\Debug\net8.0\ref\spms.dll
+D:\spms\spms\obj\Debug\net8.0\spms.sourcelink.json

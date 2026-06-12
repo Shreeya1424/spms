@@ -9,149 +9,149 @@ build_property.EnforceExtendedAnalyzerRules =
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = spms
 build_property.RootNamespace = spms
-build_property.ProjectDir = C:\Users\dhols\Downloads\spms (1)\spms\spms\
+build_property.ProjectDir = D:\spms\spms\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.RazorLangVersion = 8.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = C:\Users\dhols\Downloads\spms (1)\spms\spms
+build_property.MSBuildProjectDirectory = D:\spms\spms
 build_property._RazorSourceGeneratorDebug = 
 build_property.EffectiveAnalysisLevelStyle = 8.0
 build_property.EnableCodeStyleSeverity = 
 
-[C:/Users/dhols/Downloads/spms (1)/spms/spms/Views/Account/AccessDenied.cshtml]
+[D:/spms/spms/Views/Account/AccessDenied.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxBY2Nlc3NEZW5pZWQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/dhols/Downloads/spms (1)/spms/spms/Views/Account/Login.cshtml]
+[D:/spms/spms/Views/Account/Login.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxMb2dpbi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/dhols/Downloads/spms (1)/spms/spms/Views/Faculty/Create.cshtml]
+[D:/spms/spms/Views/Faculty/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRmFjdWx0eVxDcmVhdGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/dhols/Downloads/spms (1)/spms/spms/Views/Faculty/Edit.cshtml]
+[D:/spms/spms/Views/Faculty/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRmFjdWx0eVxFZGl0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/dhols/Downloads/spms (1)/spms/spms/Views/Faculty/Index.cshtml]
+[D:/spms/spms/Views/Faculty/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRmFjdWx0eVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/dhols/Downloads/spms (1)/spms/spms/Views/Home/Index.cshtml]
+[D:/spms/spms/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/dhols/Downloads/spms (1)/spms/spms/Views/Home/Privacy.cshtml]
+[D:/spms/spms/Views/Home/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/dhols/Downloads/spms (1)/spms/spms/Views/Permission/Index.cshtml]
+[D:/spms/spms/Views/Permission/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGVybWlzc2lvblxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/dhols/Downloads/spms (1)/spms/spms/Views/ProjectTask/Create.cshtml]
+[D:/spms/spms/Views/ProjectTask/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvamVjdFRhc2tcQ3JlYXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/dhols/Downloads/spms (1)/spms/spms/Views/ProjectTask/Edit.cshtml]
+[D:/spms/spms/Views/ProjectTask/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvamVjdFRhc2tcRWRpdC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/dhols/Downloads/spms (1)/spms/spms/Views/ProjectTask/Index.cshtml]
+[D:/spms/spms/Views/ProjectTask/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvamVjdFRhc2tcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/dhols/Downloads/spms (1)/spms/spms/Views/Project/Create.cshtml]
+[D:/spms/spms/Views/Project/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvamVjdFxDcmVhdGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/dhols/Downloads/spms (1)/spms/spms/Views/Project/Edit.cshtml]
+[D:/spms/spms/Views/Project/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvamVjdFxFZGl0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/dhols/Downloads/spms (1)/spms/spms/Views/Project/Index.cshtml]
+[D:/spms/spms/Views/Project/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvamVjdFxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/dhols/Downloads/spms (1)/spms/spms/Views/Role/Create.cshtml]
+[D:/spms/spms/Views/Role/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUm9sZVxDcmVhdGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/dhols/Downloads/spms (1)/spms/spms/Views/Role/Edit.cshtml]
+[D:/spms/spms/Views/Role/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUm9sZVxFZGl0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/dhols/Downloads/spms (1)/spms/spms/Views/Role/Index.cshtml]
+[D:/spms/spms/Views/Role/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUm9sZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/dhols/Downloads/spms (1)/spms/spms/Views/Score/Create.cshtml]
+[D:/spms/spms/Views/Score/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2NvcmVcQ3JlYXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/dhols/Downloads/spms (1)/spms/spms/Views/Score/Edit.cshtml]
+[D:/spms/spms/Views/Score/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2NvcmVcRWRpdC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/dhols/Downloads/spms (1)/spms/spms/Views/Score/Index.cshtml]
+[D:/spms/spms/Views/Score/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2NvcmVcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/dhols/Downloads/spms (1)/spms/spms/Views/Shared/Error.cshtml]
+[D:/spms/spms/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/dhols/Downloads/spms (1)/spms/spms/Views/Shared/_AlertPartial.cshtml]
+[D:/spms/spms/Views/Shared/_AlertPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9BbGVydFBhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/dhols/Downloads/spms (1)/spms/spms/Views/Shared/_LoginLayout.cshtml]
+[D:/spms/spms/Views/Shared/_LoginLayout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9Mb2dpbkxheW91dC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/dhols/Downloads/spms (1)/spms/spms/Views/Shared/_Sidebar.cshtml]
+[D:/spms/spms/Views/Shared/_Sidebar.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9TaWRlYmFyLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/dhols/Downloads/spms (1)/spms/spms/Views/Shared/_ValidationScriptsPartial.cshtml]
+[D:/spms/spms/Views/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/dhols/Downloads/spms (1)/spms/spms/Views/Student/Create.cshtml]
+[D:/spms/spms/Views/Student/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3R1ZGVudFxDcmVhdGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/dhols/Downloads/spms (1)/spms/spms/Views/Student/Edit.cshtml]
+[D:/spms/spms/Views/Student/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3R1ZGVudFxFZGl0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/dhols/Downloads/spms (1)/spms/spms/Views/Student/Index.cshtml]
+[D:/spms/spms/Views/Student/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3R1ZGVudFxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/dhols/Downloads/spms (1)/spms/spms/Views/User/Create.cshtml]
+[D:/spms/spms/Views/User/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlclxDcmVhdGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/dhols/Downloads/spms (1)/spms/spms/Views/User/Edit.cshtml]
+[D:/spms/spms/Views/User/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlclxFZGl0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/dhols/Downloads/spms (1)/spms/spms/Views/User/Index.cshtml]
+[D:/spms/spms/Views/User/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlclxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/dhols/Downloads/spms (1)/spms/spms/Views/_ViewImports.cshtml]
+[D:/spms/spms/Views/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/dhols/Downloads/spms (1)/spms/spms/Views/_ViewStart.cshtml]
+[D:/spms/spms/Views/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/dhols/Downloads/spms (1)/spms/spms/Views/Shared/_Layout.cshtml]
+[D:/spms/spms/Views/Shared/_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = b-7d35h158wm

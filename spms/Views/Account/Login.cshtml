@@ -8,102 +8,99 @@
     <div class="row justify-content-center">
         <div class="col-lg-5 col-md-7">
 
-            <div class="card shadow-lg border-0" style="border-radius: 16px; overflow: hidden;">
-
-                <!-- Card Header with gradient -->
-                <div class="text-center py-4" style="background: linear-gradient(135deg, #4154f1, #6f42c1); color: white;">
-                    <i class="bi bi-mortarboard-fill" style="font-size: 48px;"></i>
-                    <h3 class="mt-2 mb-0 fw-bold">SPMS</h3>
-                    <p class="mb-0 opacity-75">Student Project Management System</p>
+            <div class="login-card shadow-lg animate__animated animate__fadeIn">
+                
+                <!-- Header Section -->
+                <div class="login-header text-center">
+                    <div class="logo-wrapper mb-3">
+                        <i class="bi bi-mortarboard-fill"></i>
+                    </div>
+                    <h2 class="fw-bold text-white mb-1">SPMS</h2>
+                    <p class="text-white-50 small">Student Project Management System</p>
                 </div>
 
-                <div class="card-body p-4 pt-4">
-
-                    <h5 class="card-title text-center pb-0 fs-5">Login to Your Account</h5>
-                    <p class="text-center text-muted small mb-4">Enter your credentials to continue</p>
+                <div class="card-body p-4 p-md-5">
+                    <div class="text-center mb-4">
+                        <h4 class="fw-bold text-dark">Login</h4>
+                        <p class="text-muted small">Access your management dashboard</p>
+                    </div>
 
                     <!-- Alert Messages -->
                     @if (TempData["SuccessMessage"] != null)
                     {
-                        <div class="alert alert-success alert-dismissible fade show" role="alert">
-                            <i class="bi bi-check-circle me-1"></i> @TempData["SuccessMessage"]
+                        <div class="alert alert-success alert-dismissible fade show border-0 shadow-sm" role="alert">
+                            <i class="bi bi-check-circle me-2"></i> @TempData["SuccessMessage"]
                             <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                         </div>
                     }
 
                     <!-- Validation Errors -->
-                    <div asp-validation-summary="ModelOnly" class="alert alert-danger" style="display: @(ViewData.ModelState.ErrorCount > 0 ? "block" : "none")"></div>
+                    @if (ViewData.ModelState.ErrorCount > 0)
+                    {
+                        <div class="alert alert-danger border-0 shadow-sm" asp-validation-summary="ModelOnly"></div>
+                    }
 
-                    <form asp-action="Login" method="post">
+                    <form asp-action="Login" method="post" class="needs-validation">
                         @Html.AntiForgeryToken()
                         <input type="hidden" name="returnUrl" value="@ViewData["ReturnUrl"]" />
 
-                        <!-- Email -->
-                        <div class="mb-3">
-                            <label asp-for="Email" class="form-label fw-semibold">
-                                <i class="bi bi-envelope me-1"></i> Email Address
-                            </label>
-                            <input asp-for="Email" class="form-control form-control-lg" placeholder="Enter your email" autofocus>
+                        <!-- Email Field -->
+                        <div class="form-floating mb-3">
+                            <input asp-for="Email" class="form-control" placeholder="name@example.com" autofocus>
+                            <label asp-for="Email"><i class="bi bi-envelope me-2"></i>Email Address</label>
                             <span asp-validation-for="Email" class="text-danger small"></span>
                         </div>
 
-                        <!-- Password -->
-                        <div class="mb-3">
-                            <label asp-for="Password" class="form-label fw-semibold">
-                                <i class="bi bi-lock me-1"></i> Password
-                            </label>
-                            <div class="input-group">
-                                <input asp-for="Password" class="form-control form-control-lg" placeholder="Enter your password" id="passwordInput">
-                                <button class="btn btn-outline-secondary" type="button" id="togglePassword">
-                                    <i class="bi bi-eye" id="toggleIcon"></i>
-                                </button>
-                            </div>
+                        <!-- Password Field -->
+                        <div class="form-floating mb-3 position-relative">
+                            <input asp-for="Password" type="password" class="form-control" id="passwordInput" placeholder="Password">
+                            <label asp-for="Password"><i class="bi bi-lock me-2"></i>Password</label>
+                            <button type="button" class="btn position-absolute top-50 end-0 translate-middle-y me-2 border-0" id="togglePassword">
+                                <i class="bi bi-eye text-muted" id="toggleIcon"></i>
+                            </button>
                             <span asp-validation-for="Password" class="text-danger small"></span>
                         </div>
 
-                        <!-- Remember Me -->
-                        <div class="mb-4 d-flex align-items-center justify-content-between">
+                        <!-- Remember & Meta -->
+                        <div class="d-flex justify-content-between align-items-center mb-4">
                             <div class="form-check">
                                 <input asp-for="RememberMe" class="form-check-input" type="checkbox">
-                                <label asp-for="RememberMe" class="form-check-label">Remember Me</label>
+                                <label asp-for="RememberMe" class="form-check-label text-muted small">Remember me</label>
                             </div>
                         </div>
 
-                        <!-- Login Button -->
-                        <div class="d-grid mb-3">
-                            <button type="submit" class="btn btn-primary btn-lg fw-semibold" style="background: linear-gradient(135deg, #4154f1, #6f42c1); border: none; border-radius: 10px;">
-                                <i class="bi bi-box-arrow-in-right me-2"></i> Sign In
-                            </button>
-                        </div>
+                        <!-- Submit Button -->
+                        <button type="submit" class="btn btn-primary w-100 py-3 fw-bold shadow-sm login-btn">
+                            Sign In <i class="bi bi-arrow-right ms-2"></i>
+                        </button>
                     </form>
 
-                    <!-- Demo Credentials -->
-                    <div class="mt-3 p-3 rounded" style="background: #f0f4ff; border: 1px dashed #4154f1;">
-                        <p class="mb-2 fw-semibold text-primary small"><i class="bi bi-info-circle me-1"></i> Demo Login Credentials:</p>
-                        <table class="table table-sm table-borderless mb-0 small">
-                            <tr>
-                                <td><span class="badge bg-danger">Admin</span></td>
-                                <td><code>admin@@spms.com</code></td>
-                                <td><code>admin123</code></td>
-                            </tr>
-                            <tr>
-                                <td><span class="badge bg-success">Faculty</span></td>
-                                <td><code>priya.sharma@@spms.com</code></td>
-                                <td><code>faculty123</code></td>
-                            </tr>
-                            <tr>
-                                <td><span class="badge bg-info">Student</span></td>
-                                <td><code>rohan.mehta@@spms.com</code></td>
-                                <td><code>student123</code></td>
-                            </tr>
-                        </table>
+                    <!-- Demo Accounts -->
+                    <div class="demo-section mt-5 p-3 rounded-4 border border-info border-opacity-25 bg-info bg-opacity-10">
+                        <p class="small fw-bold text-info mb-3 text-center"><i class="bi bi-shield-check me-2"></i>Demo Accounts</p>
+                        <div class="d-grid gap-2">
+                             <div class="d-flex justify-content-between align-items-center bg-white p-2 rounded-3 shadow-sm mb-1">
+                                <span class="badge bg-danger rounded-pill px-3">Admin</span>
+                                <code class="text-dark small">admin@spms.com</code>
+                                <code class="text-primary fw-bold small">admin123</code>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center bg-white p-2 rounded-3 shadow-sm mb-1">
+                                <span class="badge bg-success rounded-pill px-3">Faculty</span>
+                                <code class="text-dark small">priya.sharma@spms.com</code>
+                                <code class="text-primary fw-bold small">faculty123</code>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center bg-white p-2 rounded-3 shadow-sm">
+                                <span class="badge bg-info rounded-pill px-3">Student</span>
+                                <code class="text-dark small">rohan.mehta@spms.com</code>
+                                <code class="text-primary fw-bold small">student123</code>
+                            </div>
+                        </div>
                     </div>
-
                 </div>
             </div>
 
-            <p class="text-center text-white mt-3 small opacity-75">
-                &copy; @DateTime.Now.Year SPMS Admin. All Rights Reserved.
+            <p class="text-center text-white-50 mt-4 small">
+                &copy; @DateTime.Now.Year SPMS. Secure Access Portal.
             </p>
 
         </div>

@@ -14,11 +14,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\dhols\\Downloads\\spms (1)\\spms\\spms\\spms.csproj",
+      "projectUniqueName": "D:\\spms\\spms\\spms.csproj",
       "projectName": "spms",
-      "projectPath": "C:\\Users\\dhols\\Downloads\\spms (1)\\spms\\spms\\spms.csproj",
+      "projectPath": "D:\\spms\\spms\\spms.csproj",
       "packagesPath": "C:\\Users\\dhols\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\dhols\\Downloads\\spms (1)\\spms\\spms\\obj\\",
+      "outputPath": "D:\\spms\\spms\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
